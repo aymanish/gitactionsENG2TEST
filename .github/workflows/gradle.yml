@@ -3,11 +3,11 @@
 
 name: Java CI with Gradle
 
-on:
-  push:
-    branches: [ master, ayman_branch ]
-  pull_request:
-    branches: [ master, ayman_branch ]
+on: [push, pull_request]
+  #push:
+    #branches: [ master, ayman_branch ]
+  #pull_request:
+    #branches: [ master, ayman_branch ]
 
 jobs:
   build:
@@ -26,7 +26,7 @@ jobs:
       with:
         java-version: '11'
         distribution: 'adopt'
-        cache: gralde
+        cache: gradle
     #- uses: gradle/gradle-build-action@v2
     #  with:
     #   arguments: build
@@ -36,7 +36,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: Test report
-        path: build/reports/tests/test
+        path: core/src/test
       #run: mvn -B package --file mavenTest/pom.xml # mvn -B package --file pom.xml
       
     #- uses: actions/upload-artifact@v2
