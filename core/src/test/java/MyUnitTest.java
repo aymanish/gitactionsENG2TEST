@@ -2,7 +2,9 @@ import com.mygdx.game.MyUnit;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+//Test to check if CI works:
 public class MyUnitTest {
+
 
     @Test
     public void testConcatenate() {
