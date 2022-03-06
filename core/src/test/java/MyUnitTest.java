@@ -3,6 +3,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 //Test to check if CI works:
+//Run all tests here as the CI config checks tests on this file currently:
 public class MyUnitTest {
 
 
@@ -12,7 +13,17 @@ public class MyUnitTest {
 
         String result = myUnit.concatenate("one", "two");
 
-        assertEquals("onetw", result);
+        assertEquals("onetwo", result);
+
+    }
+    
+        @Test
+    public void testConcatenate() {
+        MyUnit myUnit = new MyUnit();
+
+        String result = myUnit.concatenate("1", "2");
+
+        assertEquals("12", result);
 
     }
 }
