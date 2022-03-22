@@ -38,6 +38,12 @@ jobs:
         name: Test report
         path: core/src/test
       #run: mvn -B package --file mavenTest/pom.xml # mvn -B package --file pom.xml
+    - name: Code Coverage Report
+      #uses: romeovs/lcov-reporter-action@v0.2.11
+      uses: romeovs/lcov-reporter-action@v0.2.16
+      with:
+        lcov-file: ./coverage/lcov.info
+
       
     #- uses: actions/upload-artifact@v2
     #  with:
