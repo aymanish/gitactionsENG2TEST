@@ -12,11 +12,11 @@ on: [push, pull_request]
 jobs:
   build:
 
-   runs-on: windows-latest
-   #runs-on: ${{ matrix.os }}
-   #strategy:
-   # matrix:
-   #    os: [ubuntu-latest, macos-latest, windows-latest]
+   #runs-on: windows-latest
+   runs-on: ${{ matrix.os }}
+   strategy:
+    matrix:
+       os: [ubuntu-latest, macos-latest, windows-latest]
 
    steps:
     - uses: actions/checkout@v2
@@ -36,7 +36,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: Test report
-        path: core/src/test
+        path: core/src/test/java
       #run: mvn -B package --file mavenTest/pom.xml # mvn -B package --file pom.xml
       
     #- uses: actions/upload-artifact@v2
