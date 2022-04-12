@@ -32,6 +32,10 @@ jobs:
     #   arguments: build
     - name: Build with Gradle
       run: ./gradlew build #--no-daemon
+      
+    - name: Test with gradle
+      run: ./gradlew.bat test
+      
     - name: Archive test report
       uses: actions/upload-artifact@v2
       with:
