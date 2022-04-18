@@ -3,12 +3,12 @@ package com.mygdx.game.UI;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.Components.ComponentEvent;
+import com.mygdx.game.Components.Pirate;
 import com.mygdx.game.Entitys.Player;
 import com.mygdx.game.Managers.*;
 import com.mygdx.game.PirateGame;
@@ -22,6 +22,12 @@ public class GameScreen extends Page {
     private Label ammo;
     private final Label questDesc;
     private final Label questName;
+    //AYMAN CHANGE: UI LABELS:
+    private final Label shopArmor;
+    private final Label shopWeapon;
+    private final TextButton buyArmor;
+    private final TextButton buyWeapon;
+    //CHANGE END
     /*private final Label questComplete;
     private float showTimer = 0;
     // in seconds
@@ -97,6 +103,57 @@ public class GameScreen extends Page {
         table.add(new Label("Quit", parent.skin)).left();
         table.add(new Image(parent.skin, "key-esc"));
 
+        //AYMAN CHANGE: ADD UI FOR PLUNDER-SHOP:
+        float space = VIEWPORT_HEIGHT * 0.05f;
+        Table t2 = new Table();
+        t2.bottom().right();
+        t2.setFillParent(true);
+        actors.add(t2);
+
+        Window shopWindow = new Window("Shop", parent.skin);
+        Table shopTable = new Table();
+        shopWindow.add(shopTable);
+        t2.add(shopWindow);
+
+        //ARMOR:
+        //if statement before adding buttons/when clicking buttons:
+        //add labels
+        shopArmor = new Label("Armor $100", parent.skin);
+        shopTable.add(shopArmor).top().left();
+        //add buttons to table
+        //add functions to add shop items to player??
+        buyArmor = new TextButton("Locked", parent.skin);
+        buyArmor.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                System.out.println("Bought Armor!");
+                //buyArmor.setChecked(false);
+                buyArmor.setDisabled(true);
+                //buyArmor.setLabel(new Label("Bought Armor", parent.skin));
+                //buyArmor.
+            }
+        });
+        shopTable.add(buyArmor).top().size(100, 25).spaceBottom(space);
+        shopTable.row();
+
+        //WEAPON:
+        //add labels
+        shopWeapon = new Label("Weapon $200", parent.skin);
+        shopTable.add(shopWeapon).top().left();
+        //add buttons to table
+        //add functions to add shop items to player??
+        buyWeapon = new TextButton("Locked", parent.skin);
+        buyWeapon.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                System.out.println("Bought Weapon!");
+                //buyWeapon.setChecked(false);
+                buyWeapon.setDisabled(true);
+            }
+        });
+        shopTable.add(buyWeapon).top().size(100, 25).spaceBottom(space);
+        shopTable.row();
+        //CHANGE END
     }
 
     private float accumulator;
@@ -195,6 +252,117 @@ public class GameScreen extends Page {
             showTimer = 0;
             questComplete.setText("");
         }*/
+
+
+        //AYMAN CHANGE: SHOP UI UPDATE:
+        //UNLOCK SHOP ITEMS BUTTONS:
+        if ((p.getComponent(Pirate.class).getPlunder() >= 10)) {
+            buyArmor.setDisabled(false);
+            buyWeapon.setDisabled(false);
+            buyArmor.setText("Buy");
+            buyWeapon.setText("Buy");
+            //System.out.println("unlocked");
+
+            //UPDATE PLUNDER AFTER BUYING UPGRADE AND DISABLE BUTTONS (ONE TIME USE)
+            //STILL NEED TO IMPLEMENT ACTUAL FUNCTIONALITY OF UPGRADES:
+
+            //UPGRADE FOR MORE HEALTH (DON'T WANT TO TINKER WITH NEW ARMOR CLASS SO JUST INCREASING HEALTH)?
+            if (buyArmor.getClickListener().getTapCount() > 0 && !buyArmor.isDisabled()){
+                p.getComponent(Pirate.class).addPlunder(-10);
+                //increase health
+                //buyArmor.setText("Bought");
+                //System.out.println("update armor");
+                buyArmor.getClickListener().setTapCount(0);
+                buyArmor.setDisabled(true);
+                buyArmor.removeListener(buyArmor.getClickListener());
+            }
+            //UPGRADE FOR MORE AMMO: ?
+            if (buyWeapon.getClickListener().getTapCount() > 0 && !buyWeapon.isDisabled()){
+                p.getComponent(Pirate.class).addPlunder(-20);
+                //p.getComponent(Pirate.class).addPlunder(-20);
+                //increase ammo
+                //buyWeapon.setText("Bought");
+                //System.out.println("update weapon");
+                buyWeapon.getClickListener().setTapCount(0);
+                buyWeapon.setDisabled(true);
+                buyWeapon.removeListener(buyWeapon.getClickListener());
+            }
+        }
+
+        //AYMAN CHANGE: DISABLE BUTTONS:
+        if (buyArmor.isDisabled()) {
+            buyArmor.getClickListener().setTapCount(0);
+        }
+        if (buyWeapon.isDisabled()) {
+            buyWeapon.getClickListener().setTapCount(0);
+        }
+        //CHANGE END
+
+        //EXTRA STUFF FOR REFERENCE BELOW:
+/*
+        if (buyArmor.getClickListener().getTapCount() > 0 && !buyArmor.isDisabled()){
+            p.getComponent(Pirate.class).addPlunder(-10);
+            buyArmor.setText("Bought");
+            System.out.println("update armor");
+            buyArmor.getClickListener().setTapCount(0);
+            buyArmor.setDisabled(true);
+            buyArmor.removeListener(buyArmor.getClickListener());
+
+        }
+        if (buyWeapon.getClickListener().getTapCount() > 0 && !buyWeapon.isDisabled()){
+            p.getComponent(Pirate.class).addPlunder(-20);
+            buyWeapon.setText("Bought");
+            System.out.println("update weapon");
+            buyWeapon.getClickListener().setTapCount(0);
+            buyWeapon.setDisabled(true);
+            buyWeapon.removeListener(buyWeapon.getClickListener());
+
+        }
+        */
+
+
+/*
+        //AYMAN SHOP UI UPDATE:
+        if (buyArmor.isChecked() && (p.getComponent(Pirate.class).getPlunder() >= 100)){
+            p.getComponent(Pirate.class).addPlunder(-10);
+            System.out.println("update armor");
+            buyArmor.getClickListener().setTapCount(0);
+            buyArmor.setDisabled(true);
+            buyArmor.setChecked(false);
+        }
+
+
+        if (buyArmor.isPressed() && (p.getComponent(Pirate.class).getPlunder() >= 10)) {
+            buyArmor.setDisabled(false);
+            //buyArmor.setText("Buy");
+            if (buyArmor.isChecked()) {
+                p.getComponent(Pirate.class).addPlunder(-20);
+                buyArmor.setChecked(false);
+                System.out.println("update armor");
+                buyArmor.removeListener(buyArmor.getClickListener());
+                buyArmor.setText("Bought");
+            }
+        }
+
+        if (buyWeapon.isPressed() && (p.getComponent(Pirate.class).getPlunder() >= 10)){
+            buyWeapon.setDisabled(false);
+            //buyWeapon.setText("Buy");
+            if (buyWeapon.isChecked()) {
+                p.getComponent(Pirate.class).addPlunder(-20);
+                buyWeapon.setChecked(false);
+                System.out.println("update armor");
+                buyWeapon.removeListener(buyWeapon.getClickListener());
+                buyWeapon.setText("Bought");
+            }
+
+            //p.getComponent(Pirate.class).addPlunder(-20);
+            //System.out.println("update armor");
+            //buyWeapon.getClickListener().setTapCount(0);
+            //buyWeapon.setDisabled(true);
+            //buyWeapon.setChecked(false);
+        }
+        */
+
     }
 
     /**

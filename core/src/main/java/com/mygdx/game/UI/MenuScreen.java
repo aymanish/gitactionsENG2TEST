@@ -45,7 +45,17 @@ public class MenuScreen extends Page {
         });
         t.add(play).top().size(100, 25).spaceBottom(space);
         t.row();
-
+        //AYMAN CHANGE:
+        TextButton test = new TextButton("test", parent.skin);
+        test.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                System.out.println("clicked");
+            }
+        });
+        t.add(test).top().size(100, 25).spaceBottom(space);
+        t.row();
+        //CHANGE END
         TextButton quit = new TextButton("Quit", parent.skin);
         quit.addListener(new ChangeListener() {
             @Override
