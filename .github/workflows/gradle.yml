@@ -18,20 +18,41 @@ jobs:
     #matrix:
        #os: [ubuntu-latest, macos-latest, windows-latest]
 
+   #steps:
+   # - uses: actions/checkout@v2
+   # - uses: gradle/wrapper-validation-action@v1
+   # - name: Set up JDK 11
+   #   uses: actions/setup-java@v2
+   #   with:
+   #     java-version: '11'
+   #     distribution: 'adopt'
+   #     cache: gradle
+        
+    #MAVEN BUILD:
    steps:
     - uses: actions/checkout@v2
-    - uses: gradle/wrapper-validation-action@v1
     - name: Set up JDK 11
       uses: actions/setup-java@v2
       with:
         java-version: '11'
         distribution: 'adopt'
-        cache: gradle
+        cache: maven
+    - name: Build with Maven
+      run: mvn -B package --file mavenTest/pom.xml
+  
+    - uses: actions/upload-artifact@v2
+      with:
+       name: my-artifact
+       #path: mavenTest/target/
+       path: core/target/
+    #redundant code:
     #- uses: gradle/gradle-build-action@v2
     #  with:
     #   arguments: build
-    - name: Build with Gradle
-      run: ./gradlew build #--no-daemon
+    
+    #BUILD GRADLE
+    #- name: Build with Gradle
+    #  run: ./gradlew build #--no-daemon
       
     #- name: Test with gradle
     #  run: ./gradlew.bat test
@@ -53,6 +74,7 @@ jobs:
       with:
         files: "test-results/**/*.xml"
 
+    #UPLOAD JAR FILE:
     - name: Upload jar file
       uses: actions/upload-artifact@v2
       with:
