@@ -19,15 +19,7 @@ allprojects {
 
     version = '1.0'
     
-    //create a single Jar with all dependencies
-    task fatJar(type: Jar) {
-        manifest {
-        attributes 'Main-Class': 'com.mygdx'
-    }
-    baseName = 'maingame'
-    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
-    with jar
-}
+
     
     ext {
         appName = "Pirate-Game"
