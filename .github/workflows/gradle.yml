@@ -54,7 +54,7 @@ jobs:
     
     #BUILD GRADLE
     - name: Build with Gradle
-      run: ./gradlew build #--no-daemon
+      run: ./gradlew build --no-daemon
       
     #- name: Test with gradle
     #  run: ./gradlew.bat test
