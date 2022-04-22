@@ -18,6 +18,19 @@ allprojects {
     apply plugin: "eclipse"
 
     version = '1.0'
+    
+    //create a single Jar with all dependencies
+    task fatJar(type: Jar) {
+        manifest {
+        attributes 'Implementation-Title': 'Gradle Jar File Example',  
+        	'Implementation-Version': version,
+        	'Main-Class': 'com.mygdx'
+    }
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+    
     ext {
         appName = "Pirate-Game"
         gdxVersion = '1.10.1-SNAPSHOT'
