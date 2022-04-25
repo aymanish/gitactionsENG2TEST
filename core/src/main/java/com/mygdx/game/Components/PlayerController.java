@@ -34,9 +34,9 @@ public class PlayerController extends Component {
     }
 
     //AYMAN CHANGE: UPDATE PLAYER SPEED
-    public void incSpeed(int speedUp) {
-        speed += speedUp;
-    }
+    //public void incSpeed(int speedUp) {
+        //speed += speedUp;
+    //}
 
 
     /**
