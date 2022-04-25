@@ -10,7 +10,7 @@ on: [push, pull_request]
     #branches: [ master, ayman_branch ]
 
 jobs:
-  build:
+  build_test:
 
    runs-on: windows-latest
    #runs-on: ${{ matrix.os }}
@@ -27,61 +27,72 @@ jobs:
         java-version: '11'
         distribution: 'adopt'
         cache: gradle
-     
-     
-     #redundant code:
-    #MAVEN BUILD:
-   #steps:
-   # - uses: actions/checkout@v2
-   # - name: Set up JDK 11
-   #   uses: actions/setup-java@v2
-   #   with:
-   #     java-version: '11'
-   #     distribution: 'adopt'
-    #    cache: maven
-    #- name: Build with Maven
-    #  run: mvn -B package --file pom.xml
-  #
-  #  - uses: actions/upload-artifact@v2
-  #    with:
-  #     name: my-artifact
-   #    #path: mavenTest/target/
-    #   path: core/target/
-    #
     #- uses: gradle/gradle-build-action@v2
     #  with:
     #   arguments: build
-    
     #BUILD GRADLE
-    - name: Build with Gradle
+    - name: Build and Test
       run: ./gradlew build --no-daemon
       
     #- name: Test with gradle
     #  run: ./gradlew.bat test
       
     - name: Archive test report
+      if: always()
       uses: actions/upload-artifact@v2
       with:
         name: Test report
         path: core/src/test
       #run: mvn -B package --file mavenTest/pom.xml # mvn -B package --file pom.xml
-    - name: Code Coverage Report
-      #uses: romeovs/lcov-reporter-action@v0.2.11
-      uses: romeovs/lcov-reporter-action@v0.2.16
+  
+    #- name: Code Coverage Report
+   #   if: success()
+   #   #uses: romeovs/lcov-reporter-action@v0.2.11
+   #   uses: romeovs/lcov-reporter-action@v0.2.16
+   #   with:
+   #     lcov-file: ./coverage/lcov.info
+  publish_test_report:
+    name: Publish Unit Test Results
+    needs: build_test
+    runs-on: ubuntu-latest
+    if: success() || failure()
+    steps:
+    - name: Download artifacts
+      uses: actions/download-artifact@v2
       with:
-        lcov-file: ./coverage/lcov.info
-    - name: Publish Unit Test Results
+        path: artifacts
+    - name: Publish Test Report
       uses: EnricoMi/publish-unit-test-result-action/composite@v1
-      if: always()
+      #if: always()
       with:
         files: "test-results/**/*.xml"
-
+        #files: "artifacts/**/*.xml"
+        
+  publish-coverage-report:
+      name: Publish Coverage Test Report
+      needs: build_test
+      runs-on: ubuntu-latest
+      if: success()
+      steps:
+      - name: Download Artifacts
+        uses: actions/download-artifact@v2
+        with:
+          path: artifacts
+      - name: Upload Code Coverage
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          directory: ./artifacts/coverage-test-results/
+          files: report.xml
+          verbose: true
+      - name: Show File Structure
+        run: ls -R
     #UPLOAD JAR FILE:
-    - name: Upload jar file
-      uses: actions/upload-artifact@v2
-      with:
-        name: my-artifact
-        path: build/libs/project.jar
+    #- name: Upload jar file
+    #  uses: actions/upload-artifact@v2
+    #  with:
+    #    name: my-artifact
+    #    path: build/libs/project.jar
       
     #- uses: actions/upload-artifact@v2
     #  with:
