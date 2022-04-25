@@ -301,7 +301,7 @@ public class GameScreen extends Page {
             if (buyWeapon.getClickListener().getTapCount() > 0 && !buyWeapon.isDisabled()){
                 p.getComponent(Pirate.class).addPlunder(-20);
                 p.getComponent(Pirate.class).addAmmo(40);
-                p.getComponent(PlayerController.class).incSpeed(500);
+                //p.getComponent(PlayerController.class).incSpeed(500);
                 //increase ammo
                 //buyWeapon.setText("Bought");
                 //System.out.println("update weapon");
