@@ -33,6 +33,12 @@ public class PlayerController extends Component {
         this.speed = speed;
     }
 
+    //AYMAN CHANGE: UPDATE PLAYER SPEED
+    public void incSpeed(int speedUp) {
+        speed += speedUp;
+    }
+
+
     /**
      * Reads keyboard and mouse inputs, moving and shooting as required.
      */
@@ -63,7 +69,7 @@ public class PlayerController extends Component {
             // unit dir to fire
             ((Ship) parent).shoot(delta);
         }
-
+        //COMMENT OU TTO DISABLE SPACE SHOOTING BUG:
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             // unit dir to fire
             ((Ship) parent).shoot();

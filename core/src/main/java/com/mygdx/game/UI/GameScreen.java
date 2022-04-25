@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.Components.ComponentEvent;
 import com.mygdx.game.Components.Pirate;
+import com.mygdx.game.Components.PlayerController;
 import com.mygdx.game.Entitys.Player;
 import com.mygdx.game.Managers.*;
 import com.mygdx.game.PirateGame;
@@ -300,6 +301,7 @@ public class GameScreen extends Page {
             if (buyWeapon.getClickListener().getTapCount() > 0 && !buyWeapon.isDisabled()){
                 p.getComponent(Pirate.class).addPlunder(-20);
                 p.getComponent(Pirate.class).addAmmo(40);
+                p.getComponent(PlayerController.class).incSpeed(500);
                 //increase ammo
                 //buyWeapon.setText("Bought");
                 //System.out.println("update weapon");
