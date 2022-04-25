@@ -1,6 +1,7 @@
 package com.mygdx.game.UI;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -28,7 +29,7 @@ public class MenuScreen extends Page {
         Table t = new Table();
         t.setFillParent(true);
 
-        float space = VIEWPORT_HEIGHT * 0.25f;
+        float space = VIEWPORT_HEIGHT * 0.15f; //VIEWPORT_HEIGHT * 0.25f;
 
         t.setBackground(new TextureRegionDrawable(ResourceManager.getTexture("menuBG.jpg")));
         Label l = new Label("Pirates the movie the game", parent.skin);
@@ -36,7 +37,7 @@ public class MenuScreen extends Page {
         t.add(l).top().spaceBottom(space * 0.5f);
         t.row();
 
-        TextButton play = new TextButton("Play", parent.skin);
+        TextButton play = new TextButton("Easy", parent.skin);
         play.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -46,14 +47,37 @@ public class MenuScreen extends Page {
         t.add(play).top().size(100, 25).spaceBottom(space);
         t.row();
         //AYMAN CHANGE:
-        TextButton test = new TextButton("test", parent.skin);
-        test.addListener(new ChangeListener() {
+        TextButton mid = new TextButton("Medium", parent.skin);
+        mid.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                System.out.println("clicked");
+                System.out.println("mid");
             }
         });
-        t.add(test).top().size(100, 25).spaceBottom(space);
+        t.add(mid).top().size(100, 25).spaceBottom(space);
+        t.row();
+        //HARD
+        TextButton hard = new TextButton("Hard", parent.skin);
+        hard.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                System.out.println("hard");
+            }
+        });
+        t.add(hard).top().size(100, 25).spaceBottom(space);
+        t.row();
+        //CONTINUE SAVE:Reopen save file
+        TextButton contd = new TextButton("Continue", parent.skin);
+        contd.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                System.out.println("load save");
+                //AYMAN CHANGE FOR SAVE FEATURE:
+                //Preferences prefs = Gdx.app.getPreferences("PirateGame");
+                //END CHANGE
+            }
+        });
+        t.add(contd).top().size(100, 25).spaceBottom(space);
         t.row();
         //CHANGE END
         TextButton quit = new TextButton("Quit", parent.skin);

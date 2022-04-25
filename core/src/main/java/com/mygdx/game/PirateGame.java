@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -19,6 +20,8 @@ public class PirateGame extends Game {
     public EndScreen end;
     public Stage stage;
     public Skin skin;
+    //AYMAN CHANGE: CODE FOR SAVING GAME AS PREFERENCE
+    //public static Preferences prefs;
 
     /**
      * Create instances of game stage and UI screens.
@@ -40,6 +43,9 @@ public class PirateGame extends Game {
         menu = new MenuScreen(this);
         game = new GameScreen(this, id_map);
         end = new EndScreen(this);
+        //AYMAN CHANGE FOR SAVE FEATURE:
+        //prefs = Gdx.app.getPreferences("PirateGame");
+        //END CHANGE
         setScreen(menu);
     }
 

@@ -2,6 +2,7 @@ package com.mygdx.game.UI;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -25,8 +26,10 @@ public class GameScreen extends Page {
     //AYMAN CHANGE: UI LABELS:
     private final Label shopArmor;
     private final Label shopWeapon;
-    private final TextButton buyArmor;
+    private final TextButton buyArmor, saveBtn;
     private final TextButton buyWeapon;
+    //AYMAN CHANGE: CODE FOR SAVING GAME AS PREFERENCE
+    //public static Preferences prefs;
     //CHANGE END
     /*private final Label questComplete;
     private float showTimer = 0;
@@ -102,9 +105,25 @@ public class GameScreen extends Page {
         table.row();
         table.add(new Label("Quit", parent.skin)).left();
         table.add(new Image(parent.skin, "key-esc"));
+        table.row();
+        //SAVE BUTTON
+        //Preferences saveFile = Gdx.app.getPreferences("CurrentSave");
+        float space = VIEWPORT_HEIGHT * 0.05f;
+        saveBtn = new TextButton("SAVE", parent.skin);
+        saveBtn.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                System.out.println("Game Saved!");
+                //AYMAN CHANGE FOR SAVE FEATURE:
+                //prefs = Gdx.app.getPreferences("PirateGame");
+
+                //END CHANGE
+                //Gdx.app.getPreferences("lastsave");
+            }
+        });
+        table.add(saveBtn).bottom().right().size(100, 25).spaceBottom(space);
 
         //AYMAN CHANGE: ADD UI FOR PLUNDER-SHOP:
-        float space = VIEWPORT_HEIGHT * 0.05f;
         Table t2 = new Table();
         t2.bottom().right();
         t2.setFillParent(true);
@@ -269,6 +288,7 @@ public class GameScreen extends Page {
             //UPGRADE FOR MORE HEALTH (DON'T WANT TO TINKER WITH NEW ARMOR CLASS SO JUST INCREASING HEALTH)?
             if (buyArmor.getClickListener().getTapCount() > 0 && !buyArmor.isDisabled()){
                 p.getComponent(Pirate.class).addPlunder(-10);
+                p.getComponent(Pirate.class).addArmor(100);
                 //increase health
                 //buyArmor.setText("Bought");
                 //System.out.println("update armor");
@@ -279,7 +299,7 @@ public class GameScreen extends Page {
             //UPGRADE FOR MORE AMMO: ?
             if (buyWeapon.getClickListener().getTapCount() > 0 && !buyWeapon.isDisabled()){
                 p.getComponent(Pirate.class).addPlunder(-20);
-                //p.getComponent(Pirate.class).addPlunder(-20);
+                p.getComponent(Pirate.class).addAmmo(40);
                 //increase ammo
                 //buyWeapon.setText("Bought");
                 //System.out.println("update weapon");
