@@ -21,7 +21,8 @@ public class PirateGame extends Game {
     public Stage stage;
     public Skin skin;
     //AYMAN CHANGE: CODE FOR SAVING GAME AS PREFERENCE
-    //public static Preferences prefs;
+    public static Preferences prefs;
+    public int id_map;
 
     /**
      * Create instances of game stage and UI screens.
@@ -30,7 +31,8 @@ public class PirateGame extends Game {
     public void create() {
         // load resources
         int id_ship = ResourceManager.addTexture("ship.png");
-        int id_map = ResourceManager.addTileMap("Map.tmx");
+        //int id_map = ResourceManager.addTileMap("Map.tmx");
+        id_map = ResourceManager.addTileMap("Map.tmx");
         int atlas_id = ResourceManager.addTextureAtlas("Boats.txt");
         int extras_id = ResourceManager.addTextureAtlas("UISkin/skin.atlas");
         int buildings_id = ResourceManager.addTextureAtlas("Buildings.txt");
@@ -41,12 +43,19 @@ public class PirateGame extends Game {
         stage = new Stage(new ScreenViewport());
         createSkin();
         menu = new MenuScreen(this);
-        game = new GameScreen(this, id_map);
+        //game = new GameScreen(this, id_map);
         end = new EndScreen(this);
         //AYMAN CHANGE FOR SAVE FEATURE:
-        //prefs = Gdx.app.getPreferences("PirateGame");
+        prefs = Gdx.app.getPreferences("PirateGame");
         //END CHANGE
         setScreen(menu);
+    }
+
+
+    //AYMAN CHANGE:
+    public void startGame(int id) {
+        game = new GameScreen(this, id);
+        setScreen(game);
     }
 
     /**

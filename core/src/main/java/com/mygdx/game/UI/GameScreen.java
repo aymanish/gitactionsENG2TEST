@@ -16,6 +16,7 @@ import com.mygdx.game.Managers.*;
 import com.mygdx.game.PirateGame;
 import com.mygdx.game.Quests.Quest;
 
+import static com.mygdx.game.PirateGame.prefs;
 import static com.mygdx.utils.Constants.*;
 
 public class GameScreen extends Page {
@@ -56,7 +57,9 @@ public class GameScreen extends Page {
         int buildings_id = ResourceManager.addTextureAtlas("Buildings.txt");
         ResourceManager.loadAssets();*/
 
-
+        //AYMAN CHANGE:
+        //initialize with changed setting:
+        GameManager.Initialize(prefs.getString("difficulty"));
         GameManager.SpawnGame(id_map);
         //QuestManager.addQuest(new KillQuest(c));
 
@@ -198,6 +201,7 @@ public class GameScreen extends Page {
         }
 
         GameManager.update();
+
         // show end screen if esc is pressed
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             parent.setScreen(parent.end);

@@ -1,6 +1,7 @@
 package com.mygdx.game.Managers;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
@@ -12,6 +13,8 @@ import com.mygdx.utils.QueueFIFO;
 import com.mygdx.utils.Utilities;
 
 import java.util.ArrayList;
+
+import static com.mygdx.game.PirateGame.prefs;
 
 /**
  * Responsible for creating most entity's associated with the game. Also the cached chest and cannonballs
@@ -30,15 +33,24 @@ public final class GameManager {
 
     private static TileMapGraph mapGraph;
 
+    //AYMAN CHANGE:
+    //public static String difficulty = "GameSettingsEasy.json";
+
     /**
      * facilitates creation of the game
      */
-    public static void Initialize() {
+    //AYMAN CHANGE for difficulty:
+    //if else conditionals for difficulty to load different difficulty settings
+    //set settings as a parameter, define it before starting game
+    //change settings before spawnmap is called in game screen
+    public static void Initialize(String difficulty) {
         initialized = true;
         currentElement = 0;
-        settings = new JsonReader().
-                parse(Gdx.files.internal("GameSettings.json"));
 
+        settings = new JsonReader().
+                parse(Gdx.files.internal(difficulty));
+        //settings = new JsonReader().
+        //        parse(Gdx.files.internal("GameSettingsHard.json"));
         factions = new ArrayList<>();
         ships = new ArrayList<>();
         ballCache = new ArrayList<>(cacheSize);
@@ -59,8 +71,23 @@ public final class GameManager {
         }
     }
 
+    //public static String getDifficulty() {
+    //    if (prefs.getString("difficulty") == "easy") {
+    //        //difficulty = prefs.getString("difficulty");
+    //        return  "GameSettingsEasy.json";
+    //    } else if (prefs.getString("difficulty") == "medium") {
+    //        return  "GameSettingsMedium.json";
+    //    } else {
+    //        return  "GameSettingsHard.json";
+    //    }
+    //}
+    //CHANGE END
+    //public static void setDifficulty(String diff) {
+    //    difficulty = diff;
+    //}
+
     /**
-     * called every fram checks id the quests are completed
+     * called every frame checks id the quests are completed
      */
     public static void update() {
         QuestManager.checkCompleted();
@@ -80,6 +107,7 @@ public final class GameManager {
      *
      * @param mapId the resource id of the tilemap
      */
+
     public static void SpawnGame(int mapId) {
         CreateWorldMap(mapId);
         CreatePlayer();
@@ -145,9 +173,10 @@ public final class GameManager {
 
     private static void tryInit() {
         if (!initialized) {
-            Initialize();
+            Initialize(prefs.getString("difficulty"));
         }
     }
+    //CHANGE END
 
     public static Faction getFaction(int factionId) {
         tryInit();

@@ -8,9 +8,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.mygdx.game.Managers.GameManager;
 import com.mygdx.game.Managers.ResourceManager;
 import com.mygdx.game.PirateGame;
 
+import static com.mygdx.game.PirateGame.prefs;
 import static com.mygdx.utils.Constants.VIEWPORT_HEIGHT;
 
 /**
@@ -20,6 +22,8 @@ public class MenuScreen extends Page {
     public MenuScreen(PirateGame parent) {
         super(parent);
     }
+
+
 
     /**
      * Create menu widgets such as start button, labels, etc.
@@ -37,11 +41,19 @@ public class MenuScreen extends Page {
         t.add(l).top().spaceBottom(space * 0.5f);
         t.row();
 
+        //AYMAN CHANGE: DIFFICULTY SETTING
         TextButton play = new TextButton("Easy", parent.skin);
         play.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                parent.setScreen(parent.game);
+                //set difficulty to easy
+                prefs.putString("difficulty", "GameSettingsEasy.json");
+                //parent.setScreen(parent.game);
+                System.out.println(prefs.getString("difficulty"));
+                parent.startGame(parent.id_map);
+                //GameManager.setDifficulty(prefs.getString("difficulty"));
+                //int mid_health = 80;
+                //GameManager.getSettings().get("starting").get("health").setType(mid_health);
             }
         });
         t.add(play).top().size(100, 25).spaceBottom(space);
@@ -51,7 +63,13 @@ public class MenuScreen extends Page {
         mid.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                System.out.println("mid");
+                //set difficulty to easy
+                prefs.putString("difficulty", "GameSettingsMedium.json");
+                //parent.setScreen(parent.game);
+                System.out.println(prefs.getString("difficulty"));
+                parent.startGame(parent.id_map);
+                //GameManager.getSettings().
+                //GameManager.setDifficulty(prefs.getString("difficulty"));
             }
         });
         t.add(mid).top().size(100, 25).spaceBottom(space);
@@ -61,7 +79,13 @@ public class MenuScreen extends Page {
         hard.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                System.out.println("hard");
+                //set difficulty to easy
+                prefs.putString("difficulty", "GameSettingsHard.json");
+                //parent.setScreen(parent.game);
+                System.out.println(prefs.getString("difficulty"));
+                parent.startGame(parent.id_map);
+                //parent.startGame();
+                //GameManager.setDifficulty(prefs.getString("difficulty"));
             }
         });
         t.add(hard).top().size(100, 25).spaceBottom(space);
