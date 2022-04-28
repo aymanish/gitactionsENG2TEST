@@ -5,6 +5,7 @@ import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
+import com.badlogic.gdx.utils.JsonWriter;
 import com.mygdx.game.AI.TileMapGraph;
 import com.mygdx.game.Components.Transform;
 import com.mygdx.game.Entitys.*;
@@ -29,17 +30,16 @@ public final class GameManager {
     private static ArrayList<CannonBall> ballCache;
     private static int currentElement;
 
-    private static JsonValue settings;
+    private static JsonValue settings, saves;
 
     private static TileMapGraph mapGraph;
 
-    //AYMAN CHANGE:
-    //public static String difficulty = "GameSettingsEasy.json";
+
 
     /**
      * facilitates creation of the game
      */
-    //AYMAN CHANGE for difficulty:
+    //AYMAN DIFF CHANGE:
     //if else conditionals for difficulty to load different difficulty settings
     //set settings as a parameter, define it before starting game
     //change settings before spawnmap is called in game screen
@@ -49,8 +49,7 @@ public final class GameManager {
 
         settings = new JsonReader().
                 parse(Gdx.files.internal(difficulty));
-        //settings = new JsonReader().
-        //        parse(Gdx.files.internal("GameSettingsHard.json"));
+        //saves = new JsonWriter().
         factions = new ArrayList<>();
         ships = new ArrayList<>();
         ballCache = new ArrayList<>(cacheSize);
@@ -70,21 +69,7 @@ public final class GameManager {
             factions.add(new Faction(name, col, pos, spawn, factions.size() + 1));
         }
     }
-
-    //public static String getDifficulty() {
-    //    if (prefs.getString("difficulty") == "easy") {
-    //        //difficulty = prefs.getString("difficulty");
-    //        return  "GameSettingsEasy.json";
-    //    } else if (prefs.getString("difficulty") == "medium") {
-    //        return  "GameSettingsMedium.json";
-    //    } else {
-    //        return  "GameSettingsHard.json";
-    //    }
-    //}
     //CHANGE END
-    //public static void setDifficulty(String diff) {
-    //    difficulty = diff;
-    //}
 
     /**
      * called every frame checks id the quests are completed
@@ -101,6 +86,12 @@ public final class GameManager {
     public static Player getPlayer() {
         return (Player) ships.get(0);
     }
+
+    //AYMAN SAVE CHANGE:
+    public static Ship getShips(int n) {
+        return  ships.get(n);
+    }
+    //CHANGE END
 
     /**
      * Creates the game with player maps, NPCs, colleges
@@ -131,7 +122,7 @@ public final class GameManager {
     public static void CreatePlayer() {
         tryInit();
         Player p = new Player();
-        p.setFaction(1);
+        p.setFaction(1); //
         ships.add(p);
     }
 
@@ -171,6 +162,7 @@ public final class GameManager {
         colleges.add(c);
     }
 
+    //AYMAN DIFF CHANGE:
     private static void tryInit() {
         if (!initialized) {
             Initialize(prefs.getString("difficulty"));

@@ -12,6 +12,8 @@ import com.mygdx.game.Managers.GameManager;
 import com.mygdx.game.Managers.ResourceManager;
 import com.mygdx.game.PirateGame;
 
+import java.util.ArrayList;
+
 import static com.mygdx.game.PirateGame.prefs;
 import static com.mygdx.utils.Constants.VIEWPORT_HEIGHT;
 
@@ -41,7 +43,7 @@ public class MenuScreen extends Page {
         t.add(l).top().spaceBottom(space * 0.5f);
         t.row();
 
-        //AYMAN CHANGE: DIFFICULTY SETTING
+        //AYMAN DIFF CHANGE: DIFFICULTY SETTING
         TextButton play = new TextButton("Easy", parent.skin);
         play.addListener(new ChangeListener() {
             @Override
@@ -96,9 +98,11 @@ public class MenuScreen extends Page {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 System.out.println("load save");
-                //AYMAN CHANGE FOR SAVE FEATURE:
-                //Preferences prefs = Gdx.app.getPreferences("PirateGame");
-                //END CHANGE
+                //AYMAN SAVE CHANGE
+                prefs.putString("difficulty", "GameSettingsSaved.json");
+                System.out.println(prefs.getString("difficulty"));
+                parent.startGame(parent.id_map);
+                //CHANGE END
             }
         });
         t.add(contd).top().size(100, 25).spaceBottom(space);
