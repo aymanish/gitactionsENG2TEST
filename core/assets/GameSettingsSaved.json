@@ -1,13 +1,17 @@
 {
 "starting": {
+	"X": 10.458801,
+	"Y": 24,
 	"health": 100,
 	"damage": 10,
-	"plunder": 0,
+	"plunder": 100,
 	"playerSpeed": 100,
 	"cannonSpeed": 10000,
 	"argoRange_tiles": 9,
 	"attackRange_tiles": 4,
-	"ammo": 46
+	"ammo": 47,
+	"points": 0,
+	"time": 11.332165
 },
 "AI": {
 	"maxSpeed": 500,
@@ -25,7 +29,7 @@
 		},
 		"shipSpawn": {
 			"x": 19,
-			"y": 33.500137
+			"y": 34.500412
 		}
 	},
 	{
@@ -36,8 +40,8 @@
 			"y": 51
 		},
 		"shipSpawn": {
-			"x": 27.42437,
-			"y": 27.42437
+			"x": 44.62438,
+			"y": 44.62438
 		}
 	},
 	{

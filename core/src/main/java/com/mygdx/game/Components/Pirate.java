@@ -17,6 +17,8 @@ public class Pirate extends Component {
     private int health;
     private int ammo;
     private final int attackDmg;
+    //AYMAN CHANGE:
+    private int points;
 
     /**
      * The enemy that is being targeted by the AI.
@@ -34,6 +36,8 @@ public class Pirate extends Component {
         health = starting.getInt("health");
         attackDmg = starting.getInt("damage");
         ammo = starting.getInt("ammo");
+        //AYMAN POINTS/TIMER CHANGE:
+        points = starting.getInt("points");
     }
 
     public void addTarget(Ship target) {
@@ -54,6 +58,17 @@ public class Pirate extends Component {
     }
     public void addAmmo(int bullets) {
         ammo += bullets;
+    }
+    //AYMAN RESTART CHANGE SETTERS:
+    public void setHealth(int newHealth) {this.health = newHealth;}
+    public void setPlunder(int newPlunder) {this.plunder = newPlunder;}
+    //AYMAN POINTS CHANGE:
+    public int getPoints() {
+        return points;
+    }
+    public void setPoints(int newPoints) {this.points = newPoints;}
+    public void addPoints(int point) {
+        points += point;
     }
     //END
 

@@ -70,10 +70,10 @@ public class PlayerController extends Component {
             ((Ship) parent).shoot(delta);
         }
         //COMMENT OU TTO DISABLE SPACE SHOOTING BUG:
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+        //if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             // unit dir to fire
-            ((Ship) parent).shoot();
-        }
+        //    ((Ship) parent).shoot();
+        //}
     }
 
     /**

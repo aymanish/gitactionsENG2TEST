@@ -25,6 +25,8 @@ public class Ship extends Entity implements CollisionCallBack {
     public static ObjectMap<Vector2, String> shipDirections;
 
     private final Vector2 currentDir;
+    //AYMAN RESTART CHANGE:
+    //public static int x, y;
 
     /**
      * Creates a ship entity, containing Transform, Renderable, RigidBody, and Pirate components.
@@ -44,10 +46,15 @@ public class Ship extends Entity implements CollisionCallBack {
             shipDirections.put(new Vector2(-1, 1), "-ul");
             shipDirections.put(new Vector2(1, -1), "-dr");
             shipDirections.put(new Vector2(-1, -1), "-dl");
+
+        //AYMAN RESTART CHANGE:
+        //x = 800;
+        //y = 800;
         }
 
         Transform t = new Transform();
-        t.setPosition(800, 800);
+        //AYMAN RESTART CHANGE
+        t.setPosition(GameManager.getSettings().get("starting").getInt("X")*32, GameManager.getSettings().get("starting").getInt("Y")*32);
         Renderable r = new Renderable(3, "white-up", RenderLayer.Transparent);
         RigidBody rb = new RigidBody(PhysicsBodyType.Dynamic, r, t);
         rb.setCallback(this);
@@ -70,6 +77,12 @@ public class Ship extends Entity implements CollisionCallBack {
     public void plunder(int money) {
         getComponent(Pirate.class).addPlunder(money);
     }
+
+    //AYMAN RESTART CHANGE DELETE THIS BIT:
+    //public void setPlayerPos(int posx, int posy) {
+    //    x = posx;
+    //    y = posy;
+   // }
 
     /**
      * Associates ship with faction and orients it to the default northern direction.

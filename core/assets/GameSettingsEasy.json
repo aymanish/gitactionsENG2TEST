@@ -1,5 +1,7 @@
 {
   "starting": {
+    "X": 25,
+    "Y": 25,
     "health": 100,
     "damage": 10.0,
     "plunder": 0,
@@ -7,7 +9,9 @@
     "cannonSpeed": 10000.0,
     "argoRange_tiles": 9.0,
     "attackRange_tiles": 4.0,
-    "ammo": 50
+    "ammo": 50,
+    "points": 0,
+    "time": 0.0
   },
   "AI": {
     "maxSpeed": 500.0,

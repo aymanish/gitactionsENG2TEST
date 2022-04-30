@@ -1,5 +1,7 @@
 {
   "starting": {
+    "X": 25,
+    "Y": 25,
     "health": 60,
     "damage": 5.0,
     "plunder": 0,
@@ -7,13 +9,15 @@
     "cannonSpeed": 10000.0,
     "argoRange_tiles": 9.0,
     "attackRange_tiles": 4.0,
-    "ammo": 30
+    "ammo": 30,
+    "points": 0,
+    "time": 0.0
   },
   "AI": {
-    "maxSpeed": 500.0,
-    "accelerationTime": 0.01,
-    "arrivalTolerance": 32.0,
-    "slowRadius": 64.0
+    "maxSpeed": 10000.0,
+    "accelerationTime": 0.000000000001,
+    "arrivalTolerance": 2.0,
+    "slowRadius": 10.0
   },
   "factions": [
     {
@@ -78,7 +82,7 @@
     }
   ],
   "factionDefaults": {
-    "shipCount": 10,
+    "shipCount": 3,
     "buildingHealth": 1000,
     "shipSpawnRadius": 15
   },

@@ -38,7 +38,10 @@ public class GameScreen extends Page {
     private final TextButton buyWeapon;
     //AYMAN CHANGE: CODE FOR SAVING GAME AS PREFERENCE
     //public static Preferences prefs;
+    //public float timer = GameManager.getSettings().get("starting").getFloat("time");
+    public float timer = 0f;
     //CHANGE END
+
     /*private final Label questComplete;
     private float showTimer = 0;
     // in seconds
@@ -113,6 +116,9 @@ public class GameScreen extends Page {
         table.row();
         table.add(new Label("Shoot in direction of ship", parent.skin)).left();
         table.add(new Image(parent.skin, "space"));
+        table.row();
+        //AYMAN TUTORIAL CHANGE:
+        table.add(new Label("Destroy all houses to kill college", parent.skin)).left();
         table.row();
         table.add(new Label("Quit", parent.skin)).left();
         table.add(new Image(parent.skin, "key-esc"));
@@ -220,6 +226,10 @@ public class GameScreen extends Page {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             parent.setScreen(parent.end);
         }
+
+        //AYMAN TIMER CHANGE:
+        timer += Gdx.graphics.getDeltaTime();
+
         super.render(delta);
     }
 
@@ -233,6 +243,7 @@ public class GameScreen extends Page {
         EntityManager.cleanUp();
         RenderingManager.cleanUp();
         PhysicsManager.cleanUp();
+
     }
 
     /**
@@ -294,7 +305,7 @@ public class GameScreen extends Page {
 
         //AYMAN CHANGE: SHOP UI UPDATE:
         //UNLOCK SHOP ITEMS BUTTONS:
-        if ((p.getComponent(Pirate.class).getPlunder() >= 10)) {
+        if ((p.getComponent(Pirate.class).getPlunder() >= 50)) {
             buyArmor.setDisabled(false);
             buyWeapon.setDisabled(false);
             buyArmor.setText("Buy");
@@ -336,6 +347,13 @@ public class GameScreen extends Page {
         if (buyWeapon.isDisabled()) {
             buyWeapon.getClickListener().setTapCount(0);
         }
+
+        //AYMAN RESTART CHANGE FOR BUTTONS:
+        if (buyArmor.isDisabled())
+        buyArmor.setDisabled(false);
+        buyWeapon.setDisabled(false);
+        buyArmor.setText("Buy");
+        buyWeapon.setText("Buy");
         //CHANGE END
 
         //EXTRA STUFF FOR REFERENCE BELOW:
@@ -435,6 +453,8 @@ public class GameScreen extends Page {
     }
 
     //AYMAN SAVE CHANGE:
+    //make 3 seperate hadcodedjsons for 3 difficulties to easily change AI
+    //values without needing setters which can become complicated
     public String harcodedLIBGDXJSON(){
         Json jsonObject = new Json();
         StringWriter jsonText = new StringWriter();
@@ -446,14 +466,18 @@ public class GameScreen extends Page {
         starting.setOutputType(JsonWriter.OutputType.json);
         starting.setWriter(writer);
         starting.writeObjectStart("starting");
+        starting.writeValue("X",GameManager.getShips(0).getPosition().x / 32);
+        starting.writeValue("Y",GameManager.getShips(0).getPosition().y / 32);
         starting.writeValue("health", GameManager.getPlayer().getHealth());
         starting.writeValue("damage",10.0);
         starting.writeValue("plunder", GameManager.getPlayer().getPlunder());
-        starting.writeValue("playerSpeed",100.0);
+        starting.writeValue("playerSpeed",100.0); //need getter
         starting.writeValue("cannonSpeed", 10000.0);
         starting.writeValue("argoRange_tiles",9.0);
         starting.writeValue("attackRange_tiles", 4.0);
         starting.writeValue("ammo",GameManager.getPlayer().getAmmo());
+        starting.writeValue("points",GameManager.getPlayer().getComponent(Pirate.class).getPoints());
+        starting.writeValue("time",timer);
         starting.writeObjectEnd();
 
         Json AI = new Json();
