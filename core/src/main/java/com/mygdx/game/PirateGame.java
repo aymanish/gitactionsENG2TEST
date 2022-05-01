@@ -49,6 +49,7 @@ public class PirateGame extends Game {
         end = new EndScreen(this);
         //AYMAN DIFF CHANGE: FOR DIFF/SAVE FEATURE:
         prefs = Gdx.app.getPreferences("PirateGame");
+
         //END CHANGE
         setScreen(menu);
     }

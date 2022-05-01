@@ -17,7 +17,7 @@ import com.mygdx.utils.Utilities;
 import java.util.ArrayList;
 
 import static com.mygdx.game.PirateGame.prefs;
-
+import static com.mygdx.game.UI.GameScreen.timer;
 /**
  * Responsible for creating most entity's associated with the game. Also the cached chest and cannonballs
  */
@@ -118,6 +118,9 @@ public final class GameManager {
         getPlayer().getComponent(Pirate.class).setHealth(starting.getInt("health"));
         getPlayer().getComponent(Pirate.class).setPlunder(0);
         getPlayer().getComponent(Pirate.class).setPoints(0);
+        //restart timer: (mightve to initialize under player)
+        timer = 0f;
+
         //forloop to reset ship spawn pos and health
         //NEED TO RESET SHIP STATUS AFTER ROSCOE ADDS CODE
         //JsonValue faction = getSettings().get("factions").get("shipSpawn").getFloat("x")
