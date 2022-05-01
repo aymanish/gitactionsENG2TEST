@@ -39,7 +39,7 @@ public class GameScreen extends Page {
     //AYMAN CHANGE: CODE FOR SAVING GAME AS PREFERENCE
     //public static Preferences prefs;
     //public float timer = GameManager.getSettings().get("starting").getFloat("time");
-    public float timer = 0f;
+    public static float timer = 0f;
     //CHANGE END
 
     /*private final Label questComplete;
